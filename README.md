@@ -34,7 +34,7 @@ that thread.
 #### Alternatively
 
 1. Download the latest release
-   from [here](https://github.com/harmtemolder/koreader-calibre-plugin/releases).
+   from [here](https://github.com/kyxap/koreader-calibre-plugin/releases).
 2. Go to your calibre's _Preferences_ > _Plugins_ > _Load plugin from file_ and
    point it to the downloaded ZIP file
 3. Restart calibre
@@ -128,42 +128,28 @@ changed/removed from `sidecar_contents` data structure:
 
 This plugin has been tested successfully with:
 
-- Kobo Clara BW connected over USB or KOreader wireless driver (means should
-  work with prev and latest color modes as well)
-- Kobo Aura connected over USB, which means it will probably work for all
-  comparable Kobo devices (`KOBO` and `KOBOTOUCH`)
-- Kobo Aura H2O over USB (`KOBOTOUCHEXTENDED`,
-  see [#6](https://todo.sr.ht/~harmtemolder/koreader-calibre-plugin/6) for
-  details)
-- Kobo Aura connected wirelessly, which means it will probably work for all
-  calibre connect devices (`SMART_DEVICE_APP`)
+- Kobo Clara BW/Colour connected over USB or KOreader wireless driver
+- Kobo Aura/Touch connected over USB (`KOBO` and `KOBOTOUCH` drivers)
+- Kobo Aura H2O over USB (`KOBOTOUCHEXTENDED` driver)
+- All devices connected wirelessly via the `SMART_DEVICE_APP` driver (e.g., KOReader wireless connection)
+- PocketBook devices using `POCKETBOOK_IMPROVED`, `POCKETBOOK632`, `POCKETBOOK626`, or `POCKETBOOK622` drivers
+- Kindle Keyboard (`KINDLE2`)
+- Tolino Vision 4 HD (`TOLINO`)
 - A connected folder (`FOLDER_DEVICE`)
-- Kindle Keyboard (`KINDLE2`,
-  see [#1](https://todo.sr.ht/~harmtemolder/koreader-calibre-plugin/1) for
-  details)
-- Tolino Vision 4 HD (`TOLINO`,
-  see [this comment](https://www.mobileread.com/forums/showpost.php?p=4179705&postcount=28)
-  for details)
-- PocketBook Touch Lux 5 (which uses the `POCKETBOOK626` driver, so it will
-  probably work for all comparable PocketBook devices,
-  see [#8](https://todo.sr.ht/~harmtemolder/koreader-calibre-plugin/8) for
-  details)
-- PocketBooks that use the `POCKETBOOK622` driver
+- Manually defined devices using the `USER_DEFINED` driver
 
-This plugin is not compatible with (may work with latest plugin release):
+This plugin is not compatible with:
 
-- `MTP_DEVICE` (
-  see [#2](https://todo.sr.ht/~harmtemolder/koreader-calibre-plugin/2) for
-  details)
+- `MTP_DEVICE` (Android devices connected via MTP)
 
 ### Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=harmtemolder/koreader-calibre-plugin&type=Date)](https://star-history.com/#harmtemolder/koreader-calibre-plugin&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=kyxap/koreader-calibre-plugin&type=Date)](https://star-history.com/#kyxap/koreader-calibre-plugin&Date)
 
 ### Issues
 
 If you encounter any issues with the plugin, please submit
-them [here](https://github.com/harmtemolder/koreader-calibre-plugin/issues).
+them [here](https://github.com/kyxap/koreader-calibre-plugin/issues).
 
 ## Acknowledgements
 
@@ -199,7 +185,7 @@ them [here](https://github.com/harmtemolder/koreader-calibre-plugin/issues).
   this plugin, set `PYDEVD` to `True` in `__init__.py`.You might need to
   change `sys.path.append` in `action.py`.
 - The supported device drivers can be found
-  in [the `SUPPORTED_DEVICES` list in `config.py`](https://github.com/harmtemolder/koreader-calibre-plugin/blob/main/config.py#L32).
+  in [the `SUPPORTED_DEVICES` list in `config.py`](https://github.com/kyxap/koreader-calibre-plugin/blob/main/config.py).
   Adding a new type here is the first step to adding support, but make sure all
   features are tested thoroughly before releasing a version with an added device
 
@@ -228,18 +214,17 @@ make dev FLATPAK=1
 #### Main
 
 
-| Target         | Description                                                                                                    |
-|----------------|----------------------------------------------------------------------------------------------------------------|
-| `test`         | Run unit tests using `pytest` (includes Calibre environment mocks)                                             |
-| `lint`         | Run static analysis using `pylint` (enforces 9.5/10 score and zero Errors)                                     |
-| `dev`          | Load plugin source directly into Calibre and launch in debug mode                                              |
-| `bump-patch`   | Increment the patch version in `.version` (e.g., 0.7.2 -> 0.7.3)                                               |
-| `bump-minor`   | Increment the minor version in `.version` (e.g., 0.7.2 -> 0.8.0)                                               |
-| `bump-major`   | Increment the major version in `.version` (e.g., 0.7.2 -> 1.0.0)                                               |
-| `prep-release` | Create a `release-prep-<version>` branch, update files, and commit                                             |
-| `release`      | Tag the current version and push to trigger GitHub Release, do this after updated verion alredy pushed to main |
-| `md_to_bb`     | Convert input.md to output.forumbb (BBCode) for MobileRead forum posts                                         |
-
+| Target         | Description                                                                                                      |
+|----------------|------------------------------------------------------------------------------------------------------------------|
+| `test`         | Run unit and integration tests using `pytest` (includes Calibre environment mocks)                               |
+| `lint`         | Run static analysis using `pylint` (enforces 9.5/10 score and zero Errors)                                       |
+| `dev`          | Load plugin source directly into Calibre and launch in debug mode                                                |
+| `bump-patch`   | Increment the patch version in `.version` (e.g., 0.8.0 -> 0.8.1)                                                 |
+| `bump-minor`   | Increment the minor version in `.version` (e.g., 0.8.0 -> 0.9.0)                                                 |
+| `bump-major`   | Increment the major version in `.version` (e.g., 0.8.0 -> 1.0.0)                                                 |
+| `prep-release` | Create a `release-prep-<version>` branch, update files, and commit                                               |
+| `release`      | Tag the current version and push to trigger GitHub Release, do this after updated version already pushed to main |
+| `md_to_bb`     | Convert input.md to output.forumbb (BBCode) for MobileRead forum posts                                           |
 
 #### Extra
 
@@ -280,13 +265,13 @@ The project uses GitHub Actions to automate releases. When a tag `v*` is pushed,
 ### Debugging a release
 
 1. Download the required release
-   from [here](https://github.com/harmtemolder/koreader-calibre-plugin/releases)
+   from [here](https://github.com/kyxap/koreader-calibre-plugin/releases)
 1. Add it to calibre by running this in your
    terminal: `calibre-customize -a "KOReader_Sync_vX.X.X.zip"`, where `X.X.X`
    refers to the version you downloaded
 1. Start calibre in debug mode with `calibre-debug -g`
 1. Configure the KOReader plugin as
-   described [here](https://github.com/harmtemolder/koreader-calibre-plugin#setup)
+   described [here](https://github.com/kyxap/koreader-calibre-plugin#setup)
 1. Connect your device
 1. Run the sync by clicking the KOReader icon in your toolbar
 1. Check the details of the message when it's done if any/all books have been
