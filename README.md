@@ -228,17 +228,17 @@ make dev FLATPAK=1
 #### Main
 
 
-| Target         | Description                                                                                     |
-|----------------|-------------------------------------------------------------------------------------------------|
-| `test`         | Run unit tests using `pytest` (includes Calibre environment mocks)                              |
-| `lint`         | Run static analysis using `pylint` (enforces 9.5/10 score and zero Errors)                      |
-| `dev`          | Load plugin source directly into Calibre and launch in debug mode                               |
-| `prep-release` | Create a `release-prep-<version>` branch, update files, and commit                              |
-| `bump-patch`   | Increment the patch version in `.version` (e.g., 0.7.2 -> 0.7.3)                                |
-| `bump-minor`   | Increment the minor version in `.version` (e.g., 0.7.2 -> 0.8.0)                                |
-| `bump-major`   | Increment the major version in `.version` (e.g., 0.7.2 -> 1.0.0)                                |
-| `release`      | Tag the current version and push to trigger GitHub Release                                      |
-| `tag`          | Create and push git tag for current version, do this after updated verion alredy pushed to main |
+| Target         | Description                                                                                                    |
+|----------------|----------------------------------------------------------------------------------------------------------------|
+| `test`         | Run unit tests using `pytest` (includes Calibre environment mocks)                                             |
+| `lint`         | Run static analysis using `pylint` (enforces 9.5/10 score and zero Errors)                                     |
+| `dev`          | Load plugin source directly into Calibre and launch in debug mode                                              |
+| `bump-patch`   | Increment the patch version in `.version` (e.g., 0.7.2 -> 0.7.3)                                               |
+| `bump-minor`   | Increment the minor version in `.version` (e.g., 0.7.2 -> 0.8.0)                                               |
+| `bump-major`   | Increment the major version in `.version` (e.g., 0.7.2 -> 1.0.0)                                               |
+| `prep-release` | Create a `release-prep-<version>` branch, update files, and commit                                             |
+| `release`      | Tag the current version and push to trigger GitHub Release, do this after updated verion alredy pushed to main |
+| `md_to_bb`     | Convert input.md to output.forumbb (BBCode) for MobileRead forum posts                                         |
 
 
 #### Extra
@@ -252,7 +252,7 @@ make dev FLATPAK=1
 | `dev_version` | Update all code files with the current version from `.version`      |
 | `clean`       | Remove all build artifacts and temporary files                      |
 | `clean_dev`   | Clean up development-specific temporary files                       |
-| `md_to_bb`    | Convert README.md to BBCode for MobileRead forum posts              |
+| `tag`         | Create and push git tag for current version                         |
 
 ### Quality Assurance
 
