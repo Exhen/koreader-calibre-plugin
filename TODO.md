@@ -12,6 +12,7 @@
 
 ## ✨ Enhancements & Features
 - [ ] Add support for highlights and bookmarks into the native `annotations` table in calibre's `metadata.db` [#95](https://github.com/kyxap/koreader-calibre-plugin/issues/95)
+- [ ] **Architectural Change**: Stop converting Lua to JSON for storage. Store raw Lua in the "Raw Sidecar" column to prevent lossy conversions and fix sync-back bugs [#65](https://github.com/kyxap/koreader-calibre-plugin/issues/65), [#58](https://github.com/kyxap/koreader-calibre-plugin/issues/58).
 - [ ] Implement metadata merging (union) instead of overwriting for multi-device sync [#76](https://github.com/kyxap/koreader-calibre-plugin/issues/76)
 - [ ] Support custom sidecar locations (global .sdr folder) [#57](https://github.com/kyxap/koreader-calibre-plugin/issues/57)
 - [ ] Implement 2-way wireless sidecar modification [#100](https://github.com/kyxap/koreader-calibre-plugin/issues/100)
