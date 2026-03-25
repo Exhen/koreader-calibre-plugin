@@ -1,0 +1,41 @@
+name: Dev Build
+
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: write
+
+jobs:
+  dev-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build Plugin
+        run: make build
+
+      - name: Create or Update Dev Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: dev-build
+          name: "Dev Build (Rolling)"
+          body: |
+            This is an automated development build from the `develop` branch.
+            It contains the latest experimental fixes and features.
+            
+            **Warning:** Use at your own risk. This build may be unstable.
+            
+            Last updated: ${{ github.event.head_commit.timestamp }}
+            Commit: ${{ github.sha }}
+          prerelease: true
+          files: dist/*.zip
+          make_latest: false
+          generate_release_notes: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
