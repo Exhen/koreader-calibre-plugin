@@ -111,13 +111,13 @@ bump-major:
 	@awk -F. '{print $$1+1".0.0"}' .version > .version.tmp && mv .version.tmp .version
 	@echo "Version bumped to $$(cat .version)"
 
-pre:
-	@if grep "-pre" .version > /dev/null 2>&1; then \
-		echo "Version already has -pre suffix"; \
-	else \
-		sed -i 's/$$/-pre/' .version; \
-		echo "Version updated to $$(cat .version)"; \
-	fi
+pre: pre_version zip
+
+pre_version:
+	@sed -i 's/^[[:space:]]*version = .*/    version = $(version_tuple)/' $(init_file_to_upd)
+	@sed -i "s/^[[:space:]]*version_string = .*/    version_string = \"$(version)-pre\"/" $(init_file_to_upd)
+	@sed -i 's/Version: [^;]*;/Version: $(version)-pre;/' $(plugin_index_file_to_upd)
+	@echo "Pre-release version set to $(version)-pre"
 
 zip: $(dist_dir)
 	@echo "Creating new $(dist_dir)/$(zip_file)"

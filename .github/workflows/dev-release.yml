@@ -22,8 +22,8 @@ jobs:
         id: build
         run: |
           VERSION=$(head -n 1 .version)
-          echo "version=${VERSION}" >> $GITHUB_OUTPUT
-          make build
+          echo "version=${VERSION}-pre" >> $GITHUB_OUTPUT
+          make pre
 
       - name: Create or Update Dev Release
         id: create_release
