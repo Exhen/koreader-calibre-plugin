@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   dev-release:
@@ -18,15 +19,20 @@ jobs:
           fetch-depth: 0
 
       - name: Build Plugin
-        run: make build
+        run: |
+          # Read current version and append -pre
+          VERSION=$(head -n 1 .version)
+          echo "${VERSION}-pre" > .version
+          make build
 
       - name: Create or Update Dev Release
+        id: create_release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: dev-build
-          name: "Dev Build (Rolling)"
+          name: "Dev Build (v$(head -n 1 .version))"
           body: |
-            This is an automated development build from the `develop` branch.
+            This is an automated development build.
             It contains the latest experimental fixes and features.
             
             **Warning:** Use at your own risk. This build may be unstable.
@@ -37,5 +43,26 @@ jobs:
           files: dist/*.zip
           make_latest: false
           generate_release_notes: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notify Issues
+        run: |
+          # Extract issue numbers from commit message (e.g., #123)
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          ISSUE_NUMBERS=$(echo "$COMMIT_MSG" | grep -oP '#\K\d+' | sort -u)
+          
+          if [ -n "$ISSUE_NUMBERS" ]; then
+            for ISSUE in $ISSUE_NUMBERS; do
+              echo "Notifying issue #$ISSUE"
+              gh issue comment "$ISSUE" --body "A potential fix has been pushed to the **develop** branch. 
+              
+              You can download the latest pre-release build for testing here: [Dev Build (Rolling)](https://github.com/${{ github.repository }}/releases/tag/dev-build)
+              
+              *(Note: This is an automated notification)*"
+            done
+          else
+            echo "No issue numbers found in commit message."
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
