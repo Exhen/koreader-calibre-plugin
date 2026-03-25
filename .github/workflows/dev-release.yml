@@ -19,10 +19,13 @@ jobs:
           fetch-depth: 0
 
       - name: Build Plugin
+        id: build
         run: |
           # Read current version and append -pre
           VERSION=$(head -n 1 .version)
-          echo "${VERSION}-pre" > .version
+          PRE_VERSION="${VERSION}-pre"
+          echo "${PRE_VERSION}" > .version
+          echo "version=${PRE_VERSION}" >> $GITHUB_OUTPUT
           make build
 
       - name: Create or Update Dev Release
@@ -30,12 +33,16 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: dev-build
-          name: "Dev Build (v$(head -n 1 .version))"
+          name: "Upcoming Release (v${{ steps.build.outputs.version }})"
           body: |
-            This is an automated development build.
-            It contains the latest experimental fixes and features.
+            This is a **community pre-release** containing the latest fixes and features planned for the next official update.
             
-            **Warning:** Use at your own risk. This build may be unstable.
+            We invite everyone to collaborate:
+            - 🧪 **Test**: Download and try this build.
+            - 💬 **Feedback**: Let us know if the fixes work for you!
+            - 🚀 **Contribute**: Help us ensure the best possible stable release.
+            
+            **Note:** This build is experimental and updated automatically on every change to the `develop` branch.
             
             Last updated: ${{ github.event.head_commit.timestamp }}
             Commit: ${{ github.sha }}
