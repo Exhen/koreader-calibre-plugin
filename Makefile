@@ -20,8 +20,8 @@ plugin_index_file_to_upd = pluginIndexKOReaderSync.txt
 init_file_to_upd = __init__.py
 dist_dir = dist
 
-# Convert the version to tuple format
-version_tuple := $(shell echo $(version) | awk -F. '{print "("$$1", "$$2", "$$3")"}')
+# Convert the version to tuple format (only take numeric parts for the tuple)
+version_tuple := $(shell echo $(version) | sed 's/-.*//' | awk -F. '{print "("$$1", "$$2", "$$3")"}')
 
 # Flatpak support: set FLATPAK=1 to use Flatpak commands
 # e.g., make release FLATPAK=1
@@ -150,8 +150,8 @@ update_version_plugin_index:
 
 update_version_init:
 	@echo "Updating version in $(init_file_to_upd) to $(version_tuple)"
-	@sed -i 's/^\([[:space:]]*\)version = ([0-9, ]*)/\1version = $(version_tuple)/' $(init_file_to_upd)
-	@sed -i "s/^\([[:space:]]*\)version_string = .*/\1version_string = '$(version)'/" $(init_file_to_upd)
+	@sed -i 's/^[[:space:]]*version = .*/    version = $(version_tuple)/' $(init_file_to_upd)
+	@sed -i "s/^[[:space:]]*version_string = .*/    version_string = \"$(version)\"/" $(init_file_to_upd)
 	@echo "Version updated in $(init_file_to_upd)"
 
 clean_dev:
