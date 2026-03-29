@@ -1,9 +1,9 @@
 # KOReader calibre plugin
 
-![CI](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/ci.yml/badge.svg?branch=main)
-![Dev Build](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/dev-release.yml/badge.svg?branch=develop)
-![Latest Release](https://img.shields.io/github/v/release/kyxap/koreader-calibre-plugin?include_prereleases&label=latest%20release&color=green)
-![License](https://img.shields.io/github/license/kyxap/koreader-calibre-plugin?color=blue)
+[![CI](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/ci.yml)
+[![Dev Build](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/dev-release.yml/badge.svg?branch=develop)](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/dev-release.yml)
+[![Latest Release](https://img.shields.io/github/v/release/kyxap/koreader-calibre-plugin?label=latest%20release&color=green)](https://github.com/kyxap/koreader-calibre-plugin/releases)
+[![License](https://img.shields.io/github/license/kyxap/koreader-calibre-plugin?color=blue)](https://github.com/kyxap/koreader-calibre-plugin/blob/main/LICENSE)
 
 A calibre plugin to synchronize metadata from KOReader to calibre.
 
