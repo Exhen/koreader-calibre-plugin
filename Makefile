@@ -59,6 +59,8 @@ release: lint test
 	@if [ -n "$$(git status --porcelain .version)" ]; then \
 		git add .version; \
 		git commit -m "chore: release version $$(cat .version)"; \
+	else \
+		echo "Version file already clean."; \
 	fi
 	@$(MAKE) build
 	@$(MAKE) tag
