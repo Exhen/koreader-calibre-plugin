@@ -1,9 +1,13 @@
 # KOReader calibre plugin
 
+**Stable:**
 [![CI](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/ci.yml)
-[![Dev Build](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/dev-release.yml/badge.svg?branch=develop)](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/dev-release.yml)
 [![Latest Release](https://img.shields.io/github/v/release/kyxap/koreader-calibre-plugin?label=latest%20release&color=green)](https://github.com/kyxap/koreader-calibre-plugin/releases)
 [![License](https://img.shields.io/github/license/kyxap/koreader-calibre-plugin?color=blue)](https://github.com/kyxap/koreader-calibre-plugin/blob/main/LICENSE)
+
+**Development:**
+[![CI](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/ci.yml)
+[![Upcoming Release](https://img.shields.io/badge/upcoming_release-dev--build-orange)](https://github.com/kyxap/koreader-calibre-plugin/releases/tag/dev-build)
 
 A calibre plugin to synchronize metadata from KOReader to calibre.
 
