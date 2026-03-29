@@ -22,15 +22,19 @@ jobs:
         id: build
         run: |
           VERSION=$(head -n 1 .version)
-          # Automatically add -pre for development builds
           PRE_VERSION="${VERSION}-pre"
           echo "version=${PRE_VERSION}" >> $GITHUB_OUTPUT
           
-          # Patch files for the build (without modifying the git state permanently)
+          # 1. Create the dev marker so the Makefile uses the correct ZIP filename
+          mkdir -p dist
+          echo "${PRE_VERSION}" > dist/.version-dev
+          
+          # 2. Patch the files manually for this artifact build
           sed -i "s/^[[:space:]]*version_string = .*/    version_string = \"${PRE_VERSION}\"/" __init__.py
           sed -i "s/Version: [^;]*;/Version: ${PRE_VERSION};/" pluginIndexKOReaderSync.txt
           
-          make build
+          # 3. Create the ZIP (bypassing the 'build' target which would reset these changes)
+          make zip
 
       - name: Create or Update Pre Release
         id: create_release
