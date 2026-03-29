@@ -53,13 +53,6 @@ release: lint test
 		echo "Error: You must be on the 'main' branch to release."; \
 		exit 1; \
 	fi
-	@# Strip -pre from .version if it exists
-	@sed -i 's/-pre//' .version
-	@echo "Cleaned version for release: $$(cat .version)"
-	@if [ -n "$$(git status --porcelain .version)" ]; then \
-		git add .version; \
-		git commit -m "chore: release version $$(cat .version)"; \
-	fi
 	@$(MAKE) build
 	@$(MAKE) tag
 
@@ -110,17 +103,10 @@ bump-major:
 	@awk -F. '{print $$1+1".0.0"}' .version > .version.tmp && mv .version.tmp .version
 	@echo "Version bumped to $$(cat .version)"
 
-pre: pre_version
-	@$(MAKE) zip
+pre: build
 
 pre_version:
-	@$(eval PRE_RELEASE_VERSION=$(shell echo $(version) | sed 's/-pre//')-pre)
-	@mkdir -p "$(dist_dir)"
-	@echo "$(PRE_RELEASE_VERSION)" > "$(dist_dir)/.version-dev"
-	@sed -i 's/^[[:space:]]*version = .*/    version = $(version_tuple)/' $(init_file_to_upd)
-	@sed -i "s/^[[:space:]]*version_string = .*/    version_string = \"$(PRE_RELEASE_VERSION)\"/" $(init_file_to_upd)
-	@sed -i 's/Version: [^;]*;/Version: $(PRE_RELEASE_VERSION);/' $(plugin_index_file_to_upd)
-	@echo "Pre-release version set to $(PRE_RELEASE_VERSION)"
+	@echo "Pre-version patching is now handled by CI/CD."
 
 zip: $(dist_dir)
 	@echo "Creating new $(dist_dir)/$(zip_file)"

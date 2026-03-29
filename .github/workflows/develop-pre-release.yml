@@ -22,8 +22,15 @@ jobs:
         id: build
         run: |
           VERSION=$(head -n 1 .version)
-          echo "version=${VERSION}-pre" >> $GITHUB_OUTPUT
-          make pre
+          # Automatically add -pre for development builds
+          PRE_VERSION="${VERSION}-pre"
+          echo "version=${PRE_VERSION}" >> $GITHUB_OUTPUT
+          
+          # Patch files for the build (without modifying the git state permanently)
+          sed -i "s/^[[:space:]]*version_string = .*/    version_string = \"${PRE_VERSION}\"/" __init__.py
+          sed -i "s/Version: [^;]*;/Version: ${PRE_VERSION};/" pluginIndexKOReaderSync.txt
+          
+          make build
 
       - name: Create or Update Pre Release
         id: create_release
