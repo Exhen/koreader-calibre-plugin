@@ -1,12 +1,14 @@
 # KOReader calibre plugin
 
-[![Main CI](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/main-ci.yml/badge.svg?branch=main)](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/main-ci.yml)
+[![Quality Check](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/main-ci.yml/badge.svg)](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/main-ci.yml)
+[![Stable Release CI](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/main-release.yml/badge.svg)](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/main-release.yml)
 [![Latest Stable Release](https://img.shields.io/github/v/release/kyxap/koreader-calibre-plugin?label=latest%20stable&color=green)](https://github.com/kyxap/koreader-calibre-plugin/releases)
 
-[![Develop CI](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/develop-pre-release.yml/badge.svg?branch=develop)](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/develop-pre-release.yml)
+[![Pre-release CI](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/develop-pre-release.yml/badge.svg)](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/develop-pre-release.yml)
 [![Upcoming Release](https://img.shields.io/github/v/tag/kyxap/koreader-calibre-plugin/pre-release?label=upcoming%20release&color=orange)](https://github.com/kyxap/koreader-calibre-plugin/releases/tag/pre-release)
 
 [![License](https://img.shields.io/github/license/kyxap/koreader-calibre-plugin?color=blue)](https://github.com/kyxap/koreader-calibre-plugin/blob/main/LICENSE)
+
 
 A calibre plugin to synchronize metadata from KOReader to calibre.
 
