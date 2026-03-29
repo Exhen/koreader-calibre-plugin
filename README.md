@@ -1,5 +1,15 @@
 # KOReader calibre plugin
 
+[![Quality Check](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/main-ci.yml/badge.svg)](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/main-ci.yml)
+[![Stable Release CI](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/main-release.yml/badge.svg)](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/main-release.yml)
+[![Latest Stable Release](https://img.shields.io/github/v/release/kyxap/koreader-calibre-plugin?label=latest%20stable&color=green)](https://github.com/kyxap/koreader-calibre-plugin/releases)
+
+[![Pre-release CI](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/develop-pre-release.yml/badge.svg)](https://github.com/kyxap/koreader-calibre-plugin/actions/workflows/develop-pre-release.yml)
+[![Upcoming Release](https://img.shields.io/github/v/tag/kyxap/koreader-calibre-plugin/pre-release?label=upcoming%20release&color=orange)](https://github.com/kyxap/koreader-calibre-plugin/releases/tag/pre-release)
+
+[![License](https://img.shields.io/github/license/kyxap/koreader-calibre-plugin?color=blue)](https://github.com/kyxap/koreader-calibre-plugin/blob/main/LICENSE)
+
+
 A calibre plugin to synchronize metadata from KOReader to calibre.
 
 [KOReader](https://koreader.rocks/) creates sidecar files that hold read
@@ -219,6 +229,7 @@ make dev FLATPAK=1
 | `test`         | Run unit and integration tests using `pytest` (includes Calibre environment mocks)                               |
 | `lint`         | Run static analysis using `pylint` (enforces 9.5/10 score and zero Errors)                                       |
 | `dev`          | Load plugin source directly into Calibre and launch in debug mode                                                |
+| `pre`          | Patch internal version with `-pre` and build a community pre-release ZIP                                         |
 | `bump-patch`   | Increment the patch version in `.version` (e.g., 0.8.0 -> 0.8.1)                                                 |
 | `bump-minor`   | Increment the minor version in `.version` (e.g., 0.8.0 -> 0.9.0)                                                 |
 | `bump-major`   | Increment the major version in `.version` (e.g., 0.8.0 -> 1.0.0)                                                 |
@@ -238,6 +249,18 @@ make dev FLATPAK=1
 | `clean`       | Remove all build artifacts and temporary files                      |
 | `clean_dev`   | Clean up development-specific temporary files                       |
 | `tag`         | Create and push git tag for current version                         |
+
+### Development & Release Cycle
+
+The project uses a structured workflow to ensure both rapid updates and stable releases:
+
+1.  **Develop Branch (`develop`)**: This is the primary work-in-progress branch.
+    -   Experimental fixes and new features are merged here first.
+    -   Every push to this branch triggers an automated **Pre-release build**.
+    -   Users can download the latest community pre-release from the [Upcoming Release](https://github.com/kyxap/koreader-calibre-plugin/releases/tag/pre-release) page.
+2.  **Main Branch (`main`)**: This branch contains the stable, production-ready code.
+    -   Only merge `develop` into `main` when a milestone is reached.
+    -   Running `make release` on this branch automatically cleans the version string, tags the commit, and triggers the official GitHub Release.
 
 ### Quality Assurance
 

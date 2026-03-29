@@ -20,8 +20,8 @@ plugin_index_file_to_upd = pluginIndexKOReaderSync.txt
 init_file_to_upd = __init__.py
 dist_dir = dist
 
-# Convert the version to tuple format
-version_tuple := $(shell echo $(version) | awk -F. '{print "("$$1", "$$2", "$$3")"}')
+# Convert the version to tuple format (only take numeric parts for the tuple)
+version_tuple := $(shell echo $(version) | sed 's/-.*//' | awk -F. '{print "("$$1", "$$2", "$$3")"}')
 
 # Flatpak support: set FLATPAK=1 to use Flatpak commands
 # e.g., make release FLATPAK=1
@@ -48,20 +48,19 @@ build: clean_dev
 	@$(MAKE) update_version
 	@$(MAKE) zip
 
-release: lint test build
+release: lint test
 	@if [ "$$(git rev-parse --abbrev-ref HEAD)" != "main" ]; then \
 		echo "Error: You must be on the 'main' branch to release."; \
 		exit 1; \
 	fi
-	@if [ -n "$$(git status --porcelain)" ]; then \
-		echo "Error: Working directory is not clean. Commit all changes before releasing."; \
-		exit 1; \
+	@# Strip -pre from .version if it exists
+	@sed -i 's/-pre//' .version
+	@echo "Cleaned version for release: $$(cat .version)"
+	@if [ -n "$$(git status --porcelain .version)" ]; then \
+		git add .version; \
+		git commit -m "chore: release version $$(cat .version)"; \
 	fi
-	@git fetch origin
-	@if [ "$$(git rev-parse HEAD)" != "$$(git rev-parse origin/main)" ]; then \
-		echo "Error: Your local main is not in sync with origin/main. Push your changes first."; \
-		exit 1; \
-	fi
+	@$(MAKE) build
 	@$(MAKE) tag
 
 # Preparation for a release: creates a branch, updates versions, and commits.
@@ -111,6 +110,18 @@ bump-major:
 	@awk -F. '{print $$1+1".0.0"}' .version > .version.tmp && mv .version.tmp .version
 	@echo "Version bumped to $$(cat .version)"
 
+pre: pre_version
+	@$(MAKE) zip
+
+pre_version:
+	@$(eval PRE_RELEASE_VERSION=$(shell echo $(version) | sed 's/-pre//')-pre)
+	@mkdir -p "$(dist_dir)"
+	@echo "$(PRE_RELEASE_VERSION)" > "$(dist_dir)/.version-dev"
+	@sed -i 's/^[[:space:]]*version = .*/    version = $(version_tuple)/' $(init_file_to_upd)
+	@sed -i "s/^[[:space:]]*version_string = .*/    version_string = \"$(PRE_RELEASE_VERSION)\"/" $(init_file_to_upd)
+	@sed -i 's/Version: [^;]*;/Version: $(PRE_RELEASE_VERSION);/' $(plugin_index_file_to_upd)
+	@echo "Pre-release version set to $(PRE_RELEASE_VERSION)"
+
 zip: $(dist_dir)
 	@echo "Creating new $(dist_dir)/$(zip_file)"
 	@mkdir -p "$(dist_dir)" && zip -r "$(dist_dir)/$(zip_file)" $(zip_contents)
@@ -150,8 +161,8 @@ update_version_plugin_index:
 
 update_version_init:
 	@echo "Updating version in $(init_file_to_upd) to $(version_tuple)"
-	@sed -i 's/^\([[:space:]]*\)version = ([0-9, ]*)/\1version = $(version_tuple)/' $(init_file_to_upd)
-	@sed -i "s/^\([[:space:]]*\)version_string = .*/\1version_string = '$(version)'/" $(init_file_to_upd)
+	@sed -i 's/^[[:space:]]*version = .*/    version = $(version_tuple)/' $(init_file_to_upd)
+	@sed -i "s/^[[:space:]]*version_string = .*/    version_string = \"$(version)\"/" $(init_file_to_upd)
 	@echo "Version updated in $(init_file_to_upd)"
 
 clean_dev:
