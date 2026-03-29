@@ -217,9 +217,11 @@ make dev FLATPAK=1
 | Target         | Description                                                                                                      |
 |----------------|------------------------------------------------------------------------------------------------------------------|
 | `test`         | Run unit and integration tests using `pytest` (includes Calibre environment mocks)                               |
-| `lint`         | Run static analysis using `pylint` (enforces 9.5/10 score and zero Errors)                                       |
-| `dev`          | Load plugin source directly into Calibre and launch in debug mode                                                |
-| `bump-patch`   | Increment the patch version in `.version` (e.g., 0.8.0 -> 0.8.1)                                                 |
+| `lint`         | Run static analysis using `pylint` (enforces 9.5/10 score and zero Errors)                      |
+| `dev`          | Load plugin source directly into Calibre and launch in debug mode                               |
+| `pre`          | Patch internal version with `-pre` and build a community pre-release ZIP                        |
+| `bump-patch`   | Increment the patch version in `.version` (e.g., 0.8.0 -> 0.8.1)                                |
+
 | `bump-minor`   | Increment the minor version in `.version` (e.g., 0.8.0 -> 0.9.0)                                                 |
 | `bump-major`   | Increment the major version in `.version` (e.g., 0.8.0 -> 1.0.0)                                                 |
 | `prep-release` | Create a `release-prep-<version>` branch, update files, and commit                                               |
@@ -238,6 +240,18 @@ make dev FLATPAK=1
 | `clean`       | Remove all build artifacts and temporary files                      |
 | `clean_dev`   | Clean up development-specific temporary files                       |
 | `tag`         | Create and push git tag for current version                         |
+
+### Development & Release Cycle
+
+The project uses a structured workflow to ensure both rapid updates and stable releases:
+
+1.  **Develop Branch (`develop`)**: This is the primary work-in-progress branch.
+    -   Experimental fixes and new features are merged here first.
+    -   Every push to this branch triggers an automated **Pre-release build**.
+    -   Users can download the latest community pre-release from the [Upcoming Release](https://github.com/kyxap/koreader-calibre-plugin/releases/tag/dev-build) page.
+2.  **Main Branch (`main`)**: This branch contains the stable, production-ready code.
+    -   Only merge `develop` into `main` when a milestone is reached.
+    -   Running `make release` on this branch automatically cleans the version string, tags the commit, and triggers the official GitHub Release.
 
 ### Quality Assurance
 
